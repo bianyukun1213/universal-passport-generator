@@ -1,0 +1,127 @@
+<body onload="load()">
+    <div id="root">
+        <div style="display:inline-block;vertical-align:top;margin-right:150px;">
+            <h1 style="display:block;">周惠玉觉得很赞</h1>
+            <p style="display:block;color:red;">使用即同意不外传并承担一切责任。</p>
+            <hr />
+            <image style="display:block;width: 150px;" src="thumbs_up.png" />
+        </div>
+        <div style="display:inline-block;vertical-align:top;">
+            <label for="file" style="display:block;">假条图片：</label>
+            <input id="file" type="file" accept=".jpg,.png" style="display:block;margin-bottom:15px;"
+                oninput="loadBackgroundImg(event)" />
+            <label for="sign_select" style="display:block;">签名：</label>
+            <select id="sign_select" style="display:block;margin-bottom:15px;" oninput="selectSign(event)">
+            </select>
+            <label for="sign_scale" style="display:block;">缩放：</label>
+            <input id="sign_scale" type="range" min="0.5" max="1" value="1" step="0.01"
+                style="display:block;margin-bottom:15px;" oninput="scaleSign()" />
+            <label for="sign_rotate" style="display:block;">旋转：</label>
+            <input id="sign_rotate" type="range" min="-1" max="1" value="0" step="0.01"
+                style="display:block;margin-bottom:15px;" oninput="rotateSign()" />
+            <label for="sign_offset_x" style="display:block;">偏移 X：</label>
+            <input id="sign_offset_x" type="range" min="0" max="1" value="0.8" step="0.01"
+                style="display:block;margin-bottom:15px;" oninput="setSignOffsetX()" />
+            <label for="sign_offset_x" style="display:block;">偏移 Y：</label>
+            <input id="sign_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
+                style="display:block;margin-bottom:15px;" oninput="setSignOffsetY()" />
+            <button id="download" style="margin-bottom:15px;" onclick="download()">生成图像</button>
+        </div>
+        <hr />
+        <div id="content" style="position: relative;">
+            <div id="background" style="position:absolute;z-index:1;width:800px;">
+                <img id="img_background" src="example.png" style="width:100%;" />
+            </div>
+            <div id="sign" style="position:absolute;z-index:2;mix-blend-mode:multiply;">
+                <img id="img_sign" style="width:100%;" />
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://cdn.staticfile.org/dom-to-image/2.6.0/dom-to-image.min.js">
+</script>
+<script type="text/javascript">
+    var signData = [{
+        image: 'sign_1.png',
+        name: '样式 1',
+        width: 200,
+        height: 200
+    },
+    {
+        image: 'sign_example.jpg',
+        name: '我看你这是想造反',
+        width: 440,
+        height: 308
+    }];
+    var select = document.getElementById('sign_select');
+    for (var item of signData) {
+        select.options.add(new Option(item.name, item.image));
+    }
+    select.selectedIndex = 0;
+    var signWidth = signData[0].width;
+    var signHeight = signData[0].height;
+    document.getElementById('img_sign').src = signData[0].image;
+    window.onresize = function () {
+        scaleSign();
+    };
+    var load = function () {
+        scaleSign();
+    };
+    var loadBackgroundImg = function (event) {
+        if (!event.target.files || !event.target.files[0])
+            return;
+        var output = document.getElementById('img_background');
+        URL.revokeObjectURL(output.src);
+        output.src = URL.createObjectURL(event.target.files[0]);
+        scaleSign();
+    };
+    var selectSign = function (event) {
+        var index = event.target.options.selectedIndex;
+        document.getElementById('img_sign').src = event.target.options[index].value;
+        signWidth = signData[index].width;
+        signHeight = signData[index].height;
+        scaleSign();
+    };
+    var rotateSign = function () {
+        var value = document.getElementById('sign_rotate').value;
+        var sign = document.getElementById('sign');
+        sign.style.transform = 'rotate(' + 30 * value + 'deg)';
+    };
+    // 使用 transform 实现缩放和偏移并不能实现我想要的效果。
+    var scaleSign = function () {
+        var value = document.getElementById('sign_scale').value;
+        var sign = document.getElementById('sign');
+        sign.style.width = (signWidth * value) + 'px';
+        sign.style.height = (signHeight * value) + 'px';
+        setSignOffsetX();
+        setSignOffsetY();
+    };
+    var setSignOffsetX = function () {
+        var value = document.getElementById('sign_offset_x').value;
+        var sign = document.getElementById('sign');
+        var backgroundOffsetLeft = document.getElementById('background').offsetLeft;
+        var backgroundWidth = document.getElementById('background').offsetWidth;
+        var xLimitation = backgroundWidth - sign.offsetWidth;
+        sign.style.left = (backgroundOffsetLeft + xLimitation * value) + 'px';
+    };
+    var setSignOffsetY = function () {
+        var value = document.getElementById('sign_offset_y').value;
+        var sign = document.getElementById('sign');
+        var backgroundOffsetTop = document.getElementById('background').offsetTop;
+        var backgroundHeight = document.getElementById('background').offsetHeight;
+        var yLimitation = backgroundHeight - sign.offsetHeight;
+        sign.style.top = (backgroundOffsetTop + yLimitation * value) + 'px';
+    };
+    var download = function () {
+        var node = document.getElementById('content');
+        domtoimage.toJpeg(node, {
+            width: document.getElementById('background').offsetWidth,
+            height: document.getElementById('background').offsetHeight
+        }).then(function (dataUrl) {
+            var a = document.createElement('a');
+            a.href = dataUrl;
+            a.download = 'pic.jpg';
+            a.click();
+        });
+    };
+</script>
