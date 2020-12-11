@@ -23,9 +23,15 @@
             <label for="sign_offset_x" style="display:block;">偏移 X：</label>
             <input id="sign_offset_x" type="range" min="0" max="1" value="0.8" step="0.01"
                 style="display:block;margin-bottom:15px;" oninput="setSignOffsetX()" />
-            <label for="sign_offset_x" style="display:block;">偏移 Y：</label>
+            <label for="sign_offset_y" style="display:block;">偏移 Y：</label>
             <input id="sign_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
                 style="display:block;margin-bottom:15px;" oninput="setSignOffsetY()" />
+            <label for="sign_opacity" style="display:block;">透明：</label>
+            <input id="sign_opacity" type="range" min="0.5" max="1" value="1" step="0.01"
+                style="display:block;margin-bottom:15px;" oninput="setSignOpacity()" />
+            <label for="sign_blur" style="display:block;">模糊：</label>
+            <input id="sign_blur" type="range" min="0" max="1.5" value="0" step="0.01"
+                style="display:block;margin-bottom:15px;" oninput="setSignBlur()" />
             <button id="download" style="margin-bottom:15px;" onclick="download()">生成图像</button>
         </div>
         <hr />
@@ -88,7 +94,7 @@
     var rotateSign = function () {
         var value = document.getElementById('sign_rotate').value;
         var sign = document.getElementById('sign');
-        sign.style.transform = 'rotate(' + 30 * value + 'deg)';
+        sign.style.transform = 'rotate(' + 15 * value + 'deg)';
     };
     // 使用 transform 实现缩放和偏移并不能实现我想要的效果。
     var scaleSign = function () {
@@ -114,6 +120,16 @@
         var backgroundHeight = document.getElementById('background').offsetHeight;
         var yLimitation = backgroundHeight - sign.offsetHeight;
         sign.style.top = (backgroundOffsetTop + yLimitation * value) + 'px';
+    };
+    var setSignOpacity = function () {
+        var value = document.getElementById('sign_opacity').value;
+        var sign = document.getElementById('sign');
+        sign.style.opacity = value;
+    };
+    var setSignBlur = function () {
+        var value = document.getElementById('sign_blur').value;
+        var sign = document.getElementById('sign');
+        sign.style.filter = 'blur(' + value + 'px)';
     };
     var download = function () {
         var node = document.getElementById('content');
