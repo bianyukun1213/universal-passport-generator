@@ -144,8 +144,8 @@
         var download = function () {
             var node = document.getElementById('content');
             domtoimage.toJpeg(node, {
-                width: document.getElementById('background').offsetWidth,
-                height: document.getElementById('background').offsetHeight
+                width: document.getElementById('img_background').offsetWidth,
+                height: document.getElementById('img_background').offsetHeight
             }).then(function (dataUrl) {
                 var a = document.createElement('a');
                 a.href = dataUrl;
