@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8;" />
+    <title>周惠玉觉得很赞</title>
+</head>
+
 <body onload="load()">
     <div id="root">
         <div style="display:inline-block;vertical-align:top;margin-right:150px;">
@@ -34,7 +42,7 @@
             <button id="download" style="margin-bottom:15px;" onclick="download()">生成图像</button>
         </div>
         <hr />
-        <div id="wrapped" style="width:100%;height:100%;overflow:auto;">
+        <div id="wrapped" style="height:800px;overflow:auto;">
             <div id="content" style="position:relative;">
                 <div id="background" style="position:absolute;z-index:1;width:800px;">
                     <img id="img_background" src="example.png" style="width:100%;" />
@@ -45,103 +53,106 @@
             </div>
         </div>
     </div>
-</body>
-<script type="text/javascript" src="https://cdn.staticfile.org/dom-to-image/2.6.0/dom-to-image.min.js">
-</script>
-<script type="text/javascript">
-    var signData = [{
-        image: 'sign_1.png',
-        name: '样式 1',
-        width: 200,
-        height: 200
-    },
-    {
-        image: 'sign_2.png',
-        name: '样式 2',
-        width: 320,
-        height: 200
-    }];
-    var select = document.getElementById('sign_select');
-    for (var item of signData) {
-        select.options.add(new Option(item.name, item.image));
-    }
-    select.selectedIndex = 0;
-    var signWidth = signData[0].width;
-    var signHeight = signData[0].height;
-    document.getElementById('img_sign').src = signData[0].image;
-    window.onresize = function () {
-        scaleSign();
-    };
-    var load = function () {
-        scaleSign();
-    };
-    var loadBackgroundImg = function (event) {
-        if (!event.target.files || !event.target.files[0])
-            return;
-        var output = document.getElementById('img_background');
-        URL.revokeObjectURL(output.src);
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function () {
+
+    <script type="text/javascript" src="https://cdn.staticfile.org/dom-to-image/2.6.0/dom-to-image.min.js">
+    </script>
+    <script type="text/javascript">
+        var signData = [{
+            image: 'sign_1.png',
+            name: '样式 1',
+            width: 200,
+            height: 200
+        },
+        {
+            image: 'sign_2.png',
+            name: '样式 2',
+            width: 320,
+            height: 200
+        }];
+        var select = document.getElementById('sign_select');
+        for (var item of signData) {
+            select.options.add(new Option(item.name, item.image));
+        }
+        select.selectedIndex = 0;
+        var signWidth = signData[0].width;
+        var signHeight = signData[0].height;
+        document.getElementById('img_sign').src = signData[0].image;
+        window.onresize = function () {
             scaleSign();
         };
-    };
-    var selectSign = function (event) {
-        var index = event.target.options.selectedIndex;
-        document.getElementById('img_sign').src = event.target.options[index].value;
-        signWidth = signData[index].width;
-        signHeight = signData[index].height;
-        scaleSign();
-    };
-    var rotateSign = function () {
-        var value = document.getElementById('sign_rotate').value;
-        var sign = document.getElementById('sign');
-        sign.style.transform = 'rotate(' + 15 * value + 'deg)';
-    };
-    // 使用 transform 实现缩放和偏移并不能实现我想要的效果。
-    var scaleSign = function () {
-        var value = document.getElementById('sign_scale').value;
-        var sign = document.getElementById('sign');
-        sign.style.width = (signWidth * value) + 'px';
-        sign.style.height = (signHeight * value) + 'px';
-        setSignOffsetX();
-        setSignOffsetY();
-    };
-    var setSignOffsetX = function () {
-        var value = document.getElementById('sign_offset_x').value;
-        var sign = document.getElementById('sign');
-        var backgroundOffsetLeft = document.getElementById('background').offsetLeft;
-        var backgroundWidth = document.getElementById('background').offsetWidth;
-        var xLimitation = backgroundWidth - sign.offsetWidth;
-        sign.style.left = (backgroundOffsetLeft + xLimitation * value) + 'px';
-    };
-    var setSignOffsetY = function () {
-        var value = document.getElementById('sign_offset_y').value;
-        var sign = document.getElementById('sign');
-        var backgroundOffsetTop = document.getElementById('background').offsetTop;
-        var backgroundHeight = document.getElementById('background').offsetHeight;
-        var yLimitation = backgroundHeight - sign.offsetHeight;
-        sign.style.top = (backgroundOffsetTop + yLimitation * value) + 'px';
-    };
-    var setSignOpacity = function () {
-        var value = document.getElementById('sign_opacity').value;
-        var sign = document.getElementById('sign');
-        sign.style.opacity = value;
-    };
-    var setSignBlur = function () {
-        var value = document.getElementById('sign_blur').value;
-        var sign = document.getElementById('sign');
-        sign.style.filter = 'blur(' + value + 'px)';
-    };
-    var download = function () {
-        var node = document.getElementById('content');
-        domtoimage.toJpeg(node, {
-            width: document.getElementById('background').offsetWidth,
-            height: document.getElementById('background').offsetHeight
-        }).then(function (dataUrl) {
-            var a = document.createElement('a');
-            a.href = dataUrl;
-            a.download = 'pic.jpg';
-            a.click();
-        });
-    };
-</script>
+        var load = function () {
+            scaleSign();
+        };
+        var loadBackgroundImg = function (event) {
+            if (!event.target.files || !event.target.files[0])
+                return;
+            var output = document.getElementById('img_background');
+            URL.revokeObjectURL(output.src);
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                scaleSign();
+            };
+        };
+        var selectSign = function (event) {
+            var index = event.target.options.selectedIndex;
+            document.getElementById('img_sign').src = event.target.options[index].value;
+            signWidth = signData[index].width;
+            signHeight = signData[index].height;
+            scaleSign();
+        };
+        var rotateSign = function () {
+            var value = document.getElementById('sign_rotate').value;
+            var sign = document.getElementById('sign');
+            sign.style.transform = 'rotate(' + 15 * value + 'deg)';
+        };
+        // 使用 transform 实现缩放和偏移并不能实现我想要的效果。
+        var scaleSign = function () {
+            var value = document.getElementById('sign_scale').value;
+            var sign = document.getElementById('sign');
+            sign.style.width = (signWidth * value) + 'px';
+            sign.style.height = (signHeight * value) + 'px';
+            setSignOffsetX();
+            setSignOffsetY();
+        };
+        var setSignOffsetX = function () {
+            var value = document.getElementById('sign_offset_x').value;
+            var sign = document.getElementById('sign');
+            var backgroundOffsetLeft = document.getElementById('background').offsetLeft;
+            var backgroundWidth = document.getElementById('background').offsetWidth;
+            var xLimitation = backgroundWidth - sign.offsetWidth;
+            sign.style.left = (backgroundOffsetLeft + xLimitation * value) + 'px';
+        };
+        var setSignOffsetY = function () {
+            var value = document.getElementById('sign_offset_y').value;
+            var sign = document.getElementById('sign');
+            var backgroundOffsetTop = document.getElementById('background').offsetTop;
+            var backgroundHeight = document.getElementById('background').offsetHeight;
+            var yLimitation = backgroundHeight - sign.offsetHeight;
+            sign.style.top = (backgroundOffsetTop + yLimitation * value) + 'px';
+        };
+        var setSignOpacity = function () {
+            var value = document.getElementById('sign_opacity').value;
+            var sign = document.getElementById('sign');
+            sign.style.opacity = value;
+        };
+        var setSignBlur = function () {
+            var value = document.getElementById('sign_blur').value;
+            var sign = document.getElementById('sign');
+            sign.style.filter = 'blur(' + value + 'px)';
+        };
+        var download = function () {
+            var node = document.getElementById('content');
+            domtoimage.toJpeg(node, {
+                width: document.getElementById('background').offsetWidth,
+                height: document.getElementById('background').offsetHeight
+            }).then(function (dataUrl) {
+                var a = document.createElement('a');
+                a.href = dataUrl;
+                a.download = 'pic.jpg';
+                a.click();
+            });
+        };
+    </script>
+</body>
+
+</html>
