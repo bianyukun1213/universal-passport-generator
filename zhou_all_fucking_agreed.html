@@ -22,37 +22,40 @@
             <label for="sign_select" style="display:block;">签名：</label>
             <select id="sign_select" style="display:block;margin-bottom:15px;" oninput="selectSign(event)">
             </select>
-            <label for="sign_scale" style="display:block;">缩放：</label>
-            <input id="sign_scale" type="range" min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-bottom:15px;" oninput="scaleSign()" />
-            <label for="sign_rotate" style="display:block;">旋转：</label>
-            <input id="sign_rotate" type="range" min="-1" max="1" value="0" step="0.01"
-                style="display:block;margin-bottom:15px;" oninput="rotateSign()" />
             <label for="sign_offset_x" style="display:block;">偏移 X：</label>
             <input id="sign_offset_x" type="range" min="0" max="1" value="0.8" step="0.01"
                 style="display:block;margin-bottom:15px;" oninput="setSignOffsetX()" />
             <label for="sign_offset_y" style="display:block;">偏移 Y：</label>
             <input id="sign_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
                 style="display:block;margin-bottom:15px;" oninput="setSignOffsetY()" />
+            <label for="sign_scale_x" style="display:block;">缩放 X：</label>
+            <input id="sign_scale_x" type="range" min="0.5" max="1" value="1" step="0.01"
+                style="display:block;margin-bottom:15px;" oninput="scaleSignX()" />
+            <label for="sign_scale_y" style="display:block;">缩放 Y：</label>
+            <input id="sign_scale_y" type="range" min="0.5" max="1" value="1" step="0.01"
+                style="display:block;margin-bottom:15px;" oninput="scaleSignY()" />
+            <label for="sign_rotate" style="display:block;">旋转：</label>
+            <input id="sign_rotate" type="range" min="-1" max="1" value="0" step="0.01"
+                style="display:block;margin-bottom:15px;" oninput="rotateSign()" />
             <label for="sign_opacity" style="display:block;">透明：</label>
             <input id="sign_opacity" type="range" min="0.5" max="1" value="1" step="0.01"
                 style="display:block;margin-bottom:15px;" oninput="setSignOpacity()" />
             <label for="sign_blur" style="display:block;">模糊：</label>
-            <input id="sign_blur" type="range" min="0" max="1.5" value="0" step="0.01"
+            <input id="sign_blur" type="range" min="0" max="1" value="0" step="0.01"
                 style="display:block;margin-bottom:15px;" oninput="setSignBlur()" />
             <button id="download" style="margin-bottom:15px;" onclick="download()">生成图像</button>
         </div>
         <hr />
-        <!-- <div id="wrapped" style="height:800px;overflow:auto;"> -->
+        <div id="wrapped" style="height:800px;overflow:auto;">
             <div id="content" style="position:relative;">
                 <div id="background" style="position:absolute;z-index:1;width:800px;">
                     <img id="img_background" src="example.png" style="width:100%;" />
                 </div>
                 <div id="sign" style="position:absolute;z-index:2;mix-blend-mode:multiply;">
-                    <img id="img_sign" style="width:100%;" />
+                    <img id="img_sign" style="width:100%;height:100%;" />
                 </div>
             </div>
-        <!-- </div> -->
+        </div>
     </div>
 
     <script type="text/javascript" src="https://cdn.staticfile.org/dom-to-image/2.6.0/dom-to-image.min.js">
@@ -79,10 +82,10 @@
         var signHeight = signData[0].height;
         document.getElementById('img_sign').src = signData[0].image;
         window.onresize = function () {
-            scaleSign();
+            adjustSign();
         };
         var load = function () {
-            scaleSign();
+            adjustSign();
         };
         var loadBackgroundImg = function (event) {
             if (!event.target.files || !event.target.files[0])
@@ -91,7 +94,7 @@
             URL.revokeObjectURL(output.src);
             output.src = URL.createObjectURL(event.target.files[0]);
             output.onload = function () {
-                scaleSign();
+                adjustSign();
             };
         };
         var selectSign = function (event) {
@@ -99,7 +102,7 @@
             document.getElementById('img_sign').src = event.target.options[index].value;
             signWidth = signData[index].width;
             signHeight = signData[index].height;
-            scaleSign();
+            adjustSign();
         };
         var rotateSign = function () {
             var value = document.getElementById('sign_rotate').value;
@@ -107,13 +110,21 @@
             sign.style.transform = 'rotate(' + 15 * value + 'deg)';
         };
         // 使用 transform 实现缩放和偏移并不能实现我想要的效果。
-        var scaleSign = function () {
-            var value = document.getElementById('sign_scale').value;
-            var sign = document.getElementById('sign');
-            sign.style.width = (signWidth * value) + 'px';
-            sign.style.height = (signHeight * value) + 'px';
+        var adjustSign = function () {
+            scaleSignX();
+            scaleSignY();
             setSignOffsetX();
             setSignOffsetY();
+        };
+        var scaleSignX = function () {
+            var value = document.getElementById('sign_scale_x').value;
+            var sign = document.getElementById('sign');
+            sign.style.width = (signWidth * value) + 'px';
+        };
+        var scaleSignY = function () {
+            var value = document.getElementById('sign_scale_y').value;
+            var sign = document.getElementById('sign');
+            sign.style.height = (signHeight * value) + 'px';
         };
         var setSignOffsetX = function () {
             var value = document.getElementById('sign_offset_x').value;
@@ -139,7 +150,7 @@
         var setSignBlur = function () {
             var value = document.getElementById('sign_blur').value;
             var sign = document.getElementById('sign');
-            sign.style.filter = 'blur(' + value + 'px)';
+            sign.style.filter = 'blur(' + 1.5 * value + 'px)';
         };
         var download = function () {
             var node = document.getElementById('content');
