@@ -7,7 +7,7 @@
     <title>周惠玉觉得很赞</title>
 </head>
 
-<body onload="load()">
+<body onload="load()" oncontextmenu="return false;" onselectstart="return false;">
     <div id="root">
         <div id="functions" style="position:fixed;z-index:3;background-color:white;border:3px solid;opacity:0.75;">
             <div style="display:inline-block;vertical-align:top;margin-right:150px;">
@@ -47,9 +47,6 @@
                 <button id="download" style="margin-bottom:15px;" onclick="download()">生成图像</button>
             </div>
         </div>
-
-        <hr />
-        <!-- <div id="wrapped" style="height:800px;overflow:auto;"> -->
         <div id="content" style="position:relative;">
             <div id="background" style="position:absolute;z-index:1;width:800px;">
                 <img id="img_background" src="example.png" style="width:100%;" />
@@ -58,7 +55,6 @@
                 <img id="img_sign" style="width:100%;height:100%;" />
             </div>
         </div>
-        <!-- </div> -->
     </div>
 
     <script type="text/javascript" src="https://cdn.staticfile.org/dom-to-image/2.6.0/dom-to-image.min.js">
