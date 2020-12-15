@@ -9,53 +9,56 @@
 
 <body onload="load()">
     <div id="root">
-        <div style="display:inline-block;vertical-align:top;margin-right:150px;">
-            <h1 style="display:block;">周惠玉觉得很<span style="color:red;">赞</span></h1>
-            <p style="display:block;color:red;">使用即同意不外传并承担一切责任。</p>
-            <hr />
-            <image style="display:block;width: 150px;" src="thumbs_up.png" />
-        </div>
-        <div style="display:inline-block;vertical-align:top;">
-            <label for="file" style="display:block;">假条图片：</label>
-            <input id="file" type="file" accept=".jpg,.png" style="display:block;margin-bottom:15px;"
-                oninput="loadBackgroundImg(event)" />
-            <label for="sign_select" style="display:block;">签名：</label>
-            <select id="sign_select" style="display:block;margin-bottom:15px;" oninput="selectSign(event)">
-            </select>
-            <label for="sign_offset_x" style="display:block;">偏移 X：</label>
-            <input id="sign_offset_x" type="range" min="0" max="1" value="0.8" step="0.01"
-                style="display:block;margin-bottom:15px;" oninput="setSignOffsetX()" />
-            <label for="sign_offset_y" style="display:block;">偏移 Y：</label>
-            <input id="sign_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
-                style="display:block;margin-bottom:15px;" oninput="setSignOffsetY()" />
-            <label for="sign_scale_x" style="display:block;">缩放 X：</label>
-            <input id="sign_scale_x" type="range" min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-bottom:15px;" oninput="scaleSignX()" />
-            <label for="sign_scale_y" style="display:block;">缩放 Y：</label>
-            <input id="sign_scale_y" type="range" min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-bottom:15px;" oninput="scaleSignY()" />
-            <label for="sign_rotate" style="display:block;">旋转：</label>
-            <input id="sign_rotate" type="range" min="-1" max="1" value="0" step="0.01"
-                style="display:block;margin-bottom:15px;" oninput="rotateSign()" />
-            <label for="sign_opacity" style="display:block;">透明：</label>
-            <input id="sign_opacity" type="range" min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-bottom:15px;" oninput="setSignOpacity()" />
-            <label for="sign_blur" style="display:block;">模糊：</label>
-            <input id="sign_blur" type="range" min="0" max="1" value="0" step="0.01"
-                style="display:block;margin-bottom:15px;" oninput="setSignBlur()" />
-            <button id="download" style="margin-bottom:15px;" onclick="download()">生成图像</button>
-        </div>
-        <hr />
-        <div id="wrapped" style="height:800px;overflow:auto;">
-            <div id="content" style="position:relative;">
-                <div id="background" style="position:absolute;z-index:1;width:800px;">
-                    <img id="img_background" src="example.png" style="width:100%;" />
-                </div>
-                <div id="sign" style="position:absolute;z-index:2;mix-blend-mode:multiply;">
-                    <img id="img_sign" style="width:100%;height:100%;" />
-                </div>
+        <div id="functions" style="position:fixed;z-index:3;background-color:white;border:3px solid;opacity:75%;">
+            <div style="display:inline-block;vertical-align:top;margin-right:150px;">
+                <h1 style="display:block;">周惠玉觉得很<span style="color:red;">赞</span></h1>
+                <p style="display:block;color:red;">使用即同意不外传并承担一切责任。</p>
+                <hr />
+                <image style="display:block;width: 150px;" src="thumbs_up.png" />
+            </div>
+            <div style="display:inline-block;vertical-align:top;">
+                <label for="file" style="display:block;">假条图片：</label>
+                <input id="file" type="file" accept=".jpg,.png" style="display:block;margin-bottom:15px;"
+                    oninput="loadBackgroundImg(event)" />
+                <label for="sign_select" style="display:block;">签名：</label>
+                <select id="sign_select" style="display:block;margin-bottom:15px;" oninput="selectSign(event)">
+                </select>
+                <label for="sign_offset_x" style="display:block;">偏移 X：</label>
+                <input id="sign_offset_x" type="range" min="0" max="1" value="0.8" step="0.01"
+                    style="display:block;margin-bottom:15px;" oninput="setSignOffsetX()" />
+                <label for="sign_offset_y" style="display:block;">偏移 Y：</label>
+                <input id="sign_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
+                    style="display:block;margin-bottom:15px;" oninput="setSignOffsetY()" />
+                <label for="sign_scale_x" style="display:block;">缩放 X：</label>
+                <input id="sign_scale_x" type="range" min="0.5" max="1" value="1" step="0.01"
+                    style="display:block;margin-bottom:15px;" oninput="scaleSignX()" />
+                <label for="sign_scale_y" style="display:block;">缩放 Y：</label>
+                <input id="sign_scale_y" type="range" min="0.5" max="1" value="1" step="0.01"
+                    style="display:block;margin-bottom:15px;" oninput="scaleSignY()" />
+                <label for="sign_rotate" style="display:block;">旋转：</label>
+                <input id="sign_rotate" type="range" min="-1" max="1" value="0" step="0.01"
+                    style="display:block;margin-bottom:15px;" oninput="rotateSign()" />
+                <label for="sign_opacity" style="display:block;">透明：</label>
+                <input id="sign_opacity" type="range" min="0.5" max="1" value="1" step="0.01"
+                    style="display:block;margin-bottom:15px;" oninput="setSignOpacity()" />
+                <label for="sign_blur" style="display:block;">模糊：</label>
+                <input id="sign_blur" type="range" min="0" max="1" value="0" step="0.01"
+                    style="display:block;margin-bottom:15px;" oninput="setSignBlur()" />
+                <button id="download" style="margin-bottom:15px;" onclick="download()">生成图像</button>
             </div>
         </div>
+
+        <hr />
+        <!-- <div id="wrapped" style="height:800px;overflow:auto;"> -->
+        <div id="content" style="position:relative;">
+            <div id="background" style="position:absolute;z-index:1;width:800px;">
+                <img id="img_background" src="example.png" style="width:100%;" />
+            </div>
+            <div id="sign" style="position:absolute;z-index:2;mix-blend-mode:multiply;">
+                <img id="img_sign" style="width:100%;height:100%;" />
+            </div>
+        </div>
+        <!-- </div> -->
     </div>
 
     <script type="text/javascript" src="https://cdn.staticfile.org/dom-to-image/2.6.0/dom-to-image.min.js">
