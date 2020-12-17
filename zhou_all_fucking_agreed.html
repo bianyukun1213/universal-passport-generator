@@ -32,15 +32,15 @@
                 <label for="sign_offset_y" style="display:block">偏移 Y：</label>
                 <input id="sign_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
                     style="display:block;margin-bottom:15px" oninput="setSignOffsetY()" />
-                <label for="sign_scale_ratio_locked" style="display:block">锁定缩放比例：</label>
-                <input id="sign_scale_ratio_locked" type="checkbox" checked="checked"
-                    style="display:block;margin-bottom:15px" oninput="setScaleRatioLock()" />
                 <label for="sign_scale_x" style="display:block">缩放 X：</label>
                 <input id="sign_scale_x" type="range" min="0.5" max="1" value="1" step="0.01"
                     style="display:block;margin-bottom:15px" oninput="scaleSignX()" />
                 <label for="sign_scale_y" style="display:block">缩放 Y：</label>
                 <input id="sign_scale_y" type="range" disabled min="0.5" max="1" value="1" step="0.01"
                     style="display:block;margin-bottom:15px" oninput="scaleSignY()" />
+                <label for="sign_scale_ratio_locked" style="display:block">锁定缩放比例：</label>
+                <input id="sign_scale_ratio_locked" type="checkbox" checked="checked"
+                    style="display:block;margin-bottom:15px" oninput="setScaleRatioLock()" />
                 <label for="sign_rotate" style="display:block">旋转：</label>
                 <input id="sign_rotate" type="range" min="-1" max="1" value="0" step="0.01"
                     style="display:block;margin-bottom:15px" oninput="rotateSign()" />
@@ -73,15 +73,15 @@
             height: 200
         },
         {
-            image: 'sign_b.png',
-            name: '圆滑',
-            width: 200,
-            height: 200
-        },
-        {
             image: 'sign_c.png',
             name: '嚣张',
             width: 320,
+            height: 200
+        },
+        {
+            image: 'sign_b.png',
+            name: '圆滑',
+            width: 200,
             height: 200
         }];
         var select = document.getElementById('sign_select');
