@@ -16,40 +16,50 @@
     <div id="root">
         <div id="functions"
             style="position:fixed;top:0;bottom:0;z-index:3;overflow:auto;background-color:lightyellow;border:3px solid;opacity:0.75">
-            <h1 style="display:block">周惠玉觉得很<span style="color:red">赞</span></h1>
-            <p style="display:block;color:red">使用即同意不外传并承担一切责任。</p>
+            <h1 style="display:block;margin-left:15px;margin-right:15px">周惠玉觉得很<span style="color:red">赞</span></h1>
+            <p style="display:block;margin-left:15px;margin-right:15px;color:red">使用即同意不外传并承担一切责任。</p>
             <hr />
-            <label for="file" style="display:block">假条图片：</label>
-            <input id="file" type="file" accept=".jpg,.png" style="display:block;margin-bottom:15px"
+            <label for="file" style="display:block;margin-left:15px;margin-right:15px">假条图片：</label>
+            <input id="file" type="file" accept=".jpg,.png"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
                 oninput="loadBackgroundImg(event)" />
-            <label for="sign_select" style="display:block">签名：</label>
-            <select id="sign_select" style="display:block;margin-bottom:15px" oninput="selectSign(event)">
+            <label for="sign_select" style="display:block;margin-left:15px;margin-right:15px">签名：</label>
+            <select id="sign_select" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                oninput="selectSign(event)">
             </select>
-            <label for="sign_offset_x" style="display:block">偏移 X：</label>
+            <label for="sign_offset_x" style="display:block;margin-left:15px;margin-right:15px">偏移 X：</label>
             <input id="sign_offset_x" type="range" min="0" max="1" value="0.8" step="0.01"
-                style="display:block;margin-bottom:15px" oninput="setSignOffsetX()" />
-            <label for="sign_offset_y" style="display:block">偏移 Y：</label>
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                oninput="setSignOffsetX()" />
+            <label for="sign_offset_y" style="display:block;margin-left:15px;margin-right:15px">偏移 Y：</label>
             <input id="sign_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
-                style="display:block;margin-bottom:15px" oninput="setSignOffsetY()" />
-            <label for="sign_scale_x" style="display:block">缩放 X：</label>
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                oninput="setSignOffsetY()" />
+            <label for="sign_scale_x" style="display:block;margin-left:15px;margin-right:15px">缩放 X：</label>
             <input id="sign_scale_x" type="range" min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-bottom:15px" oninput="scaleSignX()" />
-            <label for="sign_scale_y" style="display:block">缩放 Y：</label>
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="scaleSignX()" />
+            <label for="sign_scale_y" style="display:block;margin-left:15px;margin-right:15px">缩放 Y：</label>
             <input id="sign_scale_y" type="range" disabled min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-bottom:15px" oninput="scaleSignY()" />
-            <label for="sign_scale_ratio_locked" style="display:block">锁定缩放比例：</label>
-            <input id="sign_scale_ratio_locked" type="checkbox" checked="checked"
-                style="display:block;margin-bottom:15px" oninput="setScaleRatioLock()" />
-            <label for="sign_rotate" style="display:block">旋转：</label>
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="scaleSignY()" />
+            <div style="display:block;">
+                <input id="sign_scale_ratio_locked" type="checkbox" checked="checked"
+                    style="display:inline;margin-left:15px;margin-bottom:15px"
+                    oninput="setScaleRatioLock()" />
+                <label for="sign_scale_ratio_locked"
+                    style="display:inline;margin-right:15px;margin-bottom:15px">锁定缩放比例</label>
+            </div>
+            <label for="sign_rotate" style="display:block;margin-left:15px;margin-right:15px">旋转：</label>
             <input id="sign_rotate" type="range" min="-1" max="1" value="0" step="0.01"
-                style="display:block;margin-bottom:15px" oninput="rotateSign()" />
-            <label for="sign_opacity" style="display:block">透明：</label>
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="rotateSign()" />
+            <label for="sign_opacity" style="display:block;margin-left:15px;margin-right:15px">透明：</label>
             <input id="sign_opacity" type="range" min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-bottom:15px" oninput="setSignOpacity()" />
-            <label for="sign_blur" style="display:block">模糊：</label>
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                oninput="setSignOpacity()" />
+            <label for="sign_blur" style="display:block;margin-left:15px;margin-right:15px">模糊：</label>
             <input id="sign_blur" type="range" min="0" max="1" value="0" step="0.01"
-                style="display:block;margin-bottom:15px" oninput="setSignBlur()" />
-            <button id="download" style="margin-bottom:15px" onclick="download()">生成图像</button>
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="setSignBlur()" />
+            <button id="download" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                onclick="download()">生成图像</button>
         </div>
         <div id="content" style="position:relative">
             <div id="background" style="position:absolute;z-index:1;width:800px">
