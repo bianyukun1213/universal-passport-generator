@@ -9,7 +9,8 @@
 
 <body onload="load()" oncontextmenu="return false;" onselectstart="return false;">
     <div id="root">
-        <div id="functions" style="position:fixed;z-index:3;background-color:white;border:3px solid;opacity:0.75;">
+        <div id="functions"
+            style="position:fixed;z-index:3;background-color:lightyellow;border:3px solid;opacity:0.75;">
             <div style="display:inline-block;vertical-align:top;margin-right:150px;">
                 <h1 style="display:block;">周惠玉觉得很<span style="color:red;">赞</span></h1>
                 <p style="display:block;color:red;">使用即同意不外传并承担一切责任。</p>
@@ -29,11 +30,14 @@
                 <label for="sign_offset_y" style="display:block;">偏移 Y：</label>
                 <input id="sign_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
                     style="display:block;margin-bottom:15px;" oninput="setSignOffsetY()" />
+                <label for="sign_scale_ratio_locked" style="display:block;">锁定缩放比例：</label>
+                <input id="sign_scale_ratio_locked" type="checkbox" checked="checked"
+                    style="display:block;margin-bottom:15px;" oninput="setScaleRatioLock()" />
                 <label for="sign_scale_x" style="display:block;">缩放 X：</label>
                 <input id="sign_scale_x" type="range" min="0.5" max="1" value="1" step="0.01"
                     style="display:block;margin-bottom:15px;" oninput="scaleSignX()" />
                 <label for="sign_scale_y" style="display:block;">缩放 Y：</label>
-                <input id="sign_scale_y" type="range" min="0.5" max="1" value="1" step="0.01"
+                <input id="sign_scale_y" type="range" disabled min="0.5" max="1" value="1" step="0.01"
                     style="display:block;margin-bottom:15px;" oninput="scaleSignY()" />
                 <label for="sign_rotate" style="display:block;">旋转：</label>
                 <input id="sign_rotate" type="range" min="-1" max="1" value="0" step="0.01"
@@ -61,14 +65,20 @@
     </script>
     <script type="text/javascript">
         var signData = [{
-            image: 'sign_1.png',
-            name: '样式 1',
+            image: 'sign_a.png',
+            name: '刻板',
+            width: 320,
+            height: 200
+        },
+        {
+            image: 'sign_b.png',
+            name: '圆滑',
             width: 200,
             height: 200
         },
         {
-            image: 'sign_2.png',
-            name: '样式 2',
+            image: 'sign_c.png',
+            name: '嚣张',
             width: 320,
             height: 200
         }];
@@ -79,12 +89,15 @@
         select.selectedIndex = 0;
         var signWidth = signData[0].width;
         var signHeight = signData[0].height;
+        var scaleRatioLocked = true;
         document.getElementById('img_sign').src = signData[0].image;
         window.onresize = function () {
-            adjustSign();
+            scaleSignX();
+            scaleSignY();
         };
         var load = function () {
-            adjustSign();
+            scaleSignX();
+            scaleSignY();
         };
         var loadBackgroundImg = function (event) {
             if (!event.target.files || !event.target.files[0])
@@ -93,7 +106,8 @@
             URL.revokeObjectURL(output.src);
             output.src = URL.createObjectURL(event.target.files[0]);
             output.onload = function () {
-                adjustSign();
+                scaleSignX();
+                scaleSignY();
             };
         };
         var selectSign = function (event) {
@@ -101,7 +115,8 @@
             document.getElementById('img_sign').src = event.target.options[index].value;
             signWidth = signData[index].width;
             signHeight = signData[index].height;
-            adjustSign();
+            scaleSignX();
+            scaleSignY();
         };
         var rotateSign = function () {
             var value = document.getElementById('sign_rotate').value;
@@ -109,21 +124,35 @@
             sign.style.transform = 'rotate(' + 15 * value + 'deg)';
         };
         // 使用 transform 实现缩放和偏移并不能实现我想要的效果。
-        var adjustSign = function () {
-            scaleSignX();
-            scaleSignY();
-            setSignOffsetX();
-            setSignOffsetY();
-        };
         var scaleSignX = function () {
             var value = document.getElementById('sign_scale_x').value;
             var sign = document.getElementById('sign');
             sign.style.width = (signWidth * value) + 'px';
+            if (scaleRatioLocked) {
+                document.getElementById('sign_scale_y').value = value;
+                sign.style.height = (signHeight * value) + 'px';
+            }
+            setSignOffsetX();
+            setSignOffsetY();
         };
         var scaleSignY = function () {
             var value = document.getElementById('sign_scale_y').value;
             var sign = document.getElementById('sign');
             sign.style.height = (signHeight * value) + 'px';
+            setSignOffsetX();
+            setSignOffsetY();
+        };
+        var setScaleRatioLock = function () {
+            if (document.getElementById('sign_scale_ratio_locked').checked) {
+                scaleRatioLocked = true;
+                document.getElementById('sign_scale_y').disabled = true;
+            }
+            else {
+                scaleRatioLocked = false;
+                document.getElementById('sign_scale_y').disabled = false;
+            }
+            scaleSignX();
+            scaleSignY();
         };
         var setSignOffsetX = function () {
             var value = document.getElementById('sign_offset_x').value;
