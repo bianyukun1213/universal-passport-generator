@@ -16,9 +16,9 @@
     <div id="root">
         <div id="functions"
             style="position:fixed;top:0;bottom:0;z-index:3;overflow:auto;background-color:lightyellow;border:3px solid;opacity:0.75">
-            <h1 style="display:block;margin-left:15px;margin-right:15px">周惠玉觉得很<span style="color:red">赞</span></h1>
-            <p style="display:block;margin-left:15px;margin-right:15px;color:red">使用即同意不外传并承担一切责任。</p>
-            <hr />
+            <h1 style="margin-left:15px;margin-right:15px">周惠玉觉得很<span style="color:red">赞</span></h1>
+            <p style="margin-left:15px;margin-right:15px;color:red">使用即同意不外传并承担一切责任。</p>
+            <hr style="margin-left:15px;margin-right:15px" />
             <label for="file" style="display:block;margin-left:15px;margin-right:15px">假条图片：</label>
             <input id="file" type="file" accept=".jpg,.png"
                 style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
@@ -43,8 +43,7 @@
                 style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="scaleSignY()" />
             <div style="display:block">
                 <input id="sign_scale_ratio_locked" type="checkbox" checked="checked"
-                    style="display:inline;margin-left:15px;margin-bottom:15px"
-                    oninput="setScaleRatioLock()" />
+                    style="display:inline;margin-left:15px;margin-bottom:15px" oninput="setScaleRatioLock()" />
                 <label for="sign_scale_ratio_locked"
                     style="display:inline;margin-right:15px;margin-bottom:15px">锁定缩放比例</label>
             </div>
@@ -80,13 +79,13 @@
             height: 200
         },
         {
-            image: 'sign_c.png',
+            image: 'sign_b.png',
             name: '嚣张',
             width: 320,
             height: 200
         },
         {
-            image: 'sign_b.png',
+            image: 'sign_c.png',
             name: '圆滑',
             width: 200,
             height: 200
@@ -105,9 +104,9 @@
             scaleSignY();
         };
         var load = function () {
-            console.log('Developed by Hollis(his2nd.life)');
             scaleSignX();
             scaleSignY();
+            console.log('Developed by Hollis(his2nd.life)');
         };
         var loadBackgroundImg = function (event) {
             if (!event.target.files || !event.target.files[0])
