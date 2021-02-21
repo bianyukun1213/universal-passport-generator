@@ -15,98 +15,103 @@
 <body onload="load()" onselectstart="return false">
     <div id="root">
         <div id="functions"
-            style="position:fixed;top:0;bottom:0;z-index:3;overflow:auto;background-color:lightyellow;border:3px solid;opacity:0.75">
+            style="position:fixed;top:0;bottom:0;z-index:3;overflow:auto;background-color:white;border:3px solid;opacity:0.75">
             <h1 style="margin-left:15px;margin-right:15px">周惠玉觉得很<span style="color:red">赞</span></h1>
             <p style="margin-left:15px;margin-right:15px;color:red">使用即同意不外传并承担一切责任。</p>
             <hr style="margin-left:15px;margin-right:15px" />
-            <label for="file" style="display:block;margin-left:15px;margin-right:15px">假条图片：</label>
+            <label for="file" style="display:block;margin-left:15px;margin-right:15px">背景：</label>
             <input id="file" type="file" accept=".jpg,.png"
                 style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
                 oninput="loadBackgroundImg(event)" />
-            <label for="sign_select" style="display:block;margin-left:15px;margin-right:15px">签名：</label>
-            <select id="sign_select" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
-                oninput="selectSign(event)">
+            <label for="signature_select" style="display:block;margin-left:15px;margin-right:15px">签名：</label>
+            <select id="signature_select" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                oninput="selectSignature(event)">
             </select>
-            <label for="sign_offset_x" style="display:block;margin-left:15px;margin-right:15px">偏移 X：</label>
-            <input id="sign_offset_x" type="range" min="0" max="1" value="0.8" step="0.01"
+            <label for="signature_offset_x" style="display:block;margin-left:15px;margin-right:15px">偏移 X：</label>
+            <input id="signature_offset_x" type="range" min="0" max="1" value="0.8" step="0.01"
                 style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
-                oninput="setSignOffsetX()" />
-            <label for="sign_offset_y" style="display:block;margin-left:15px;margin-right:15px">偏移 Y：</label>
-            <input id="sign_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
+                oninput="setSignatureOffsetX()" />
+            <label for="signature_offset_y" style="display:block;margin-left:15px;margin-right:15px">偏移 Y：</label>
+            <input id="signature_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
                 style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
-                oninput="setSignOffsetY()" />
-            <label for="sign_scale_x" style="display:block;margin-left:15px;margin-right:15px">缩放 X：</label>
-            <input id="sign_scale_x" type="range" min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="scaleSignX()" />
-            <label for="sign_scale_y" style="display:block;margin-left:15px;margin-right:15px">缩放 Y：</label>
-            <input id="sign_scale_y" type="range" disabled min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="scaleSignY()" />
+                oninput="setSignatureOffsetY()" />
+            <label for="signature_scale_x" style="display:block;margin-left:15px;margin-right:15px">缩放 X：</label>
+            <input id="signature_scale_x" type="range" min="0.5" max="1" value="1" step="0.01"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                oninput="scaleSignatureX()" />
+            <label for="signature_scale_y" style="display:block;margin-left:15px;margin-right:15px">缩放 Y：</label>
+            <input id="signature_scale_y" type="range" disabled min="0.5" max="1" value="1" step="0.01"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                oninput="scaleSignatureY()" />
             <div style="display:block">
-                <input id="sign_scale_ratio_locked" type="checkbox" checked="checked"
+                <input id="signature_scale_ratio_locked" type="checkbox" checked="checked"
                     style="display:inline;margin-left:15px;margin-bottom:15px" oninput="setScaleRatioLock()" />
-                <label for="sign_scale_ratio_locked"
+                <label for="signature_scale_ratio_locked"
                     style="display:inline;margin-right:15px;margin-bottom:15px">锁定缩放比例</label>
             </div>
-            <label for="sign_rotate" style="display:block;margin-left:15px;margin-right:15px">旋转：</label>
-            <input id="sign_rotate" type="range" min="-1" max="1" value="0" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="rotateSign()" />
-            <label for="sign_opacity" style="display:block;margin-left:15px;margin-right:15px">透明：</label>
-            <input id="sign_opacity" type="range" min="0.5" max="1" value="1" step="0.01"
+            <label for="signature_rotate" style="display:block;margin-left:15px;margin-right:15px">旋转：</label>
+            <input id="signature_rotate" type="range" min="-1" max="1" value="0" step="0.01"
                 style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
-                oninput="setSignOpacity()" />
-            <label for="sign_blur" style="display:block;margin-left:15px;margin-right:15px">模糊：</label>
-            <input id="sign_blur" type="range" min="0" max="1" value="0" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="setSignBlur()" />
+                oninput="rotateSignature()" />
+            <label for="signature_opacity" style="display:block;margin-left:15px;margin-right:15px">透明：</label>
+            <input id="signature_opacity" type="range" min="0.5" max="1" value="1" step="0.01"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                oninput="setSignatureOpacity()" />
+            <label for="signature_blur" style="display:block;margin-left:15px;margin-right:15px">模糊：</label>
+            <input id="signature_blur" type="range" min="0" max="1" value="0" step="0.01"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                oninput="setSignatureBlur()" />
             <button id="download" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
                 onclick="download()">生成图像</button>
         </div>
         <div id="content" style="position:relative">
             <div id="background" style="position:absolute;z-index:1;width:800px">
-                <img id="img_background" src="example.png" style="width:100%" />
+                <img id="img_background" src="background.jpg" style="width:100%" />
             </div>
-            <div id="sign" style="position:absolute;z-index:2;mix-blend-mode:multiply">
-                <img id="img_sign" style="width:100%;height:100%" />
+            <div id="signature" style="position:absolute;z-index:2;mix-blend-mode:multiply">
+                <img id="img_signature" style="width:100%;height:100%" />
             </div>
         </div>
     </div>
     <script type="text/javascript" src="https://cdn.staticfile.org/dom-to-image/2.6.0/dom-to-image.min.js">
     </script>
     <script type="text/javascript">
-        var signData = [{
-            image: 'sign_a.png',
-            name: '刻板',
-            width: 320,
-            height: 200
-        },
-        {
-            image: 'sign_b.png',
-            name: '嚣张',
-            width: 320,
-            height: 200
-        },
-        {
-            image: 'sign_c.png',
-            name: '圆滑',
-            width: 200,
-            height: 200
-        }];
-        var select = document.getElementById('sign_select');
-        for (var item of signData) {
+        var signatureData = [{
+                image: 'style_1.png',
+                name: '样式 1',
+                width: 320,
+                height: 200
+            },
+            {
+                image: 'style_2.png',
+                name: '样式 2',
+                width: 320,
+                height: 200
+            },
+            {
+                image: 'style_3.png',
+                name: '样式 3',
+                width: 200,
+                height: 200
+            }
+        ];
+        var select = document.getElementById('signature_select');
+        for (var item of signatureData) {
             select.options.add(new Option(item.name, item.image));
         }
         select.selectedIndex = 0;
-        var signWidth = signData[0].width;
-        var signHeight = signData[0].height;
+        var signatureWidth = signatureData[0].width;
+        var signatureHeight = signatureData[0].height;
         var scaleRatioLocked = true;
-        document.getElementById('img_sign').src = signData[0].image;
+        document.getElementById('img_signature').src = signatureData[0].image;
         window.onresize = function () {
-            scaleSignX();
-            scaleSignY();
+            scaleSignatureX();
+            scaleSignatureY();
         };
         var load = function () {
-            scaleSignX();
-            scaleSignY();
-            console.log('Developed by Hollis(his2nd.life)');
+            scaleSignatureX();
+            scaleSignatureY();
+            console.log('Developed by Hollis(https://his2nd.life/).');
         };
         var loadBackgroundImg = function (event) {
             if (!event.target.files || !event.target.files[0])
@@ -115,79 +120,77 @@
             URL.revokeObjectURL(output.src);
             output.src = URL.createObjectURL(event.target.files[0]);
             output.onload = function () {
-                scaleSignX();
-                scaleSignY();
+                scaleSignatureX();
+                scaleSignatureY();
             };
         };
-        var selectSign = function (event) {
+        var selectSignature = function (event) {
             var index = event.target.options.selectedIndex;
-            document.getElementById('img_sign').src = event.target.options[index].value;
-            signWidth = signData[index].width;
-            signHeight = signData[index].height;
-            scaleSignX();
-            scaleSignY();
+            document.getElementById('img_signature').src = event.target.options[index].value;
+            signatureWidth = signatureData[index].width;
+            signatureHeight = signatureData[index].height;
+            scaleSignatureX();
+            scaleSignatureY();
         };
-        var rotateSign = function () {
-            var value = document.getElementById('sign_rotate').value;
-            var sign = document.getElementById('sign');
-            sign.style.transform = 'rotate(' + 15 * value + 'deg)';
+        var rotateSignature = function () {
+            var value = document.getElementById('signature_rotate').value;
+            var signature = document.getElementById('signature');
+            signature.style.transform = 'rotate(' + 15 * value + 'deg)';
         };
-        // 使用 transform 实现缩放和偏移并不能实现我想要的效果。
-        var scaleSignX = function () {
-            var value = document.getElementById('sign_scale_x').value;
-            var sign = document.getElementById('sign');
-            sign.style.width = (signWidth * value) + 'px';
+        var scaleSignatureX = function () {
+            var value = document.getElementById('signature_scale_x').value;
+            var signature = document.getElementById('signature');
+            signature.style.width = (signatureWidth * value) + 'px';
             if (scaleRatioLocked) {
-                document.getElementById('sign_scale_y').value = value;
-                sign.style.height = (signHeight * value) + 'px';
+                document.getElementById('signature_scale_y').value = value;
+                signature.style.height = (signatureHeight * value) + 'px';
             }
-            setSignOffsetX();
-            setSignOffsetY();
+            setSignatureOffsetX();
+            setSignatureOffsetY();
         };
-        var scaleSignY = function () {
-            var value = document.getElementById('sign_scale_y').value;
-            var sign = document.getElementById('sign');
-            sign.style.height = (signHeight * value) + 'px';
-            setSignOffsetX();
-            setSignOffsetY();
+        var scaleSignatureY = function () {
+            var value = document.getElementById('signature_scale_y').value;
+            var signature = document.getElementById('signature');
+            signature.style.height = (signatureHeight * value) + 'px';
+            setSignatureOffsetX();
+            setSignatureOffsetY();
         };
         var setScaleRatioLock = function () {
-            if (document.getElementById('sign_scale_ratio_locked').checked) {
+            if (document.getElementById('signature_scale_ratio_locked').checked) {
                 scaleRatioLocked = true;
-                document.getElementById('sign_scale_y').disabled = true;
-            }
-            else {
+                document.getElementById('signature_scale_y').disabled = true;
+            } else {
                 scaleRatioLocked = false;
-                document.getElementById('sign_scale_y').disabled = false;
+                document.getElementById('signature_scale_y').disabled = false;
             }
-            scaleSignX();
-            scaleSignY();
+            scaleSignatureX();
+            scaleSignatureY();
         };
-        var setSignOffsetX = function () {
-            var value = document.getElementById('sign_offset_x').value;
-            var sign = document.getElementById('sign');
+        var setSignatureOffsetX = function () {
+            var value = document.getElementById('signature_offset_x').value;
+            var signature = document.getElementById('signature');
             var backgroundOffsetLeft = document.getElementById('background').offsetLeft;
             var backgroundWidth = document.getElementById('background').offsetWidth;
-            var xLimitation = backgroundWidth - sign.offsetWidth;
-            sign.style.left = (backgroundOffsetLeft + xLimitation * value) + 'px';
+            var xLimitation = backgroundWidth - signature.offsetWidth;
+            signature.style.left = (backgroundOffsetLeft + xLimitation * value) + 'px';
         };
-        var setSignOffsetY = function () {
-            var value = document.getElementById('sign_offset_y').value;
-            var sign = document.getElementById('sign');
+        var setSignatureOffsetY = function () {
+            var value = document.getElementById('signature_offset_y').value;
+            var signature = document.getElementById('signature');
             var backgroundOffsetTop = document.getElementById('background').offsetTop;
             var backgroundHeight = document.getElementById('background').offsetHeight;
-            var yLimitation = backgroundHeight - sign.offsetHeight;
-            sign.style.top = (backgroundOffsetTop + yLimitation * value) + 'px';
+            var yLimitation = backgroundHeight - signature.offsetHeight;
+            signature.style.top = (backgroundOffsetTop + yLimitation * value) + 'px';
         };
-        var setSignOpacity = function () {
-            var value = document.getElementById('sign_opacity').value;
-            var sign = document.getElementById('sign');
-            sign.style.opacity = value;
+        var setSignatureOpacity = function () {
+            var value = document.getElementById('signature_opacity').value;
+            var signature = document.getElementById('signature');
+            signature.style.opacity = value;
         };
-        var setSignBlur = function () {
-            var value = document.getElementById('sign_blur').value;
-            var sign = document.getElementById('sign');
-            sign.style.filter = 'blur(' + 1.5 * value + 'px)';
+        var setSignatureBlur = function () {
+            var value = document.getElementById('signature_blur').value;
+            var signature = document.getElementById('signature');
+            signature.style.filter = 'blur(' + 1.5 * value + 'px)';
         };
         var download = function () {
             var node = document.getElementById('content');
