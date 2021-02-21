@@ -15,61 +15,61 @@
 <body onload="load()" onselectstart="return false">
     <div id="root">
         <div id="functions"
-            style="position:fixed;top:0;bottom:0;z-index:3;overflow:auto;background-color:white;border:3px solid;opacity:0.75">
-            <h1 style="margin-left:15px;margin-right:15px">周惠玉觉得很<span style="color:red">赞</span></h1>
-            <p style="margin-left:15px;margin-right:15px;color:red">使用即同意不外传并承担一切责任。</p>
-            <hr style="margin-left:15px;margin-right:15px" />
-            <label for="file" style="display:block;margin-left:15px;margin-right:15px">背景：</label>
+            style="position:fixed;top:0;bottom:0;z-index:3;overflow:auto;background-color:white;border:3px solid;opacity:0.75;">
+            <h1 style="margin-left:15px;margin-right:15px;">周惠玉觉得很<span style="color:red;">赞</span></h1>
+            <p style="margin-left:15px;margin-right:15px;color:red;">使用即同意不外传并承担一切责任。</p>
+            <hr style="margin-left:15px;margin-right:15px;" />
+            <label for="file" style="display:block;margin-left:15px;margin-right:15px;">背景：</label>
             <input id="file" type="file" accept=".jpg,.png"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 oninput="loadBackgroundImg(event)" />
-            <label for="signature_select" style="display:block;margin-left:15px;margin-right:15px">签名：</label>
-            <select id="signature_select" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+            <label for="signature_select" style="display:block;margin-left:15px;margin-right:15px;">签名：</label>
+            <select id="signature_select" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 oninput="selectSignature(event)">
             </select>
-            <label for="signature_offset_x" style="display:block;margin-left:15px;margin-right:15px">偏移 X：</label>
+            <label for="signature_offset_x" style="display:block;margin-left:15px;margin-right:15px;">偏移 X：</label>
             <input id="signature_offset_x" type="range" min="0" max="1" value="0.8" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 oninput="setSignatureOffsetX()" />
-            <label for="signature_offset_y" style="display:block;margin-left:15px;margin-right:15px">偏移 Y：</label>
+            <label for="signature_offset_y" style="display:block;margin-left:15px;margin-right:15px;">偏移 Y：</label>
             <input id="signature_offset_y" type="range" min="0" max="1" value="0.8" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 oninput="setSignatureOffsetY()" />
-            <label for="signature_scale_x" style="display:block;margin-left:15px;margin-right:15px">缩放 X：</label>
+            <label for="signature_scale_x" style="display:block;margin-left:15px;margin-right:15px;">缩放 X：</label>
             <input id="signature_scale_x" type="range" min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 oninput="scaleSignatureX()" />
-            <label for="signature_scale_y" style="display:block;margin-left:15px;margin-right:15px">缩放 Y：</label>
+            <label for="signature_scale_y" style="display:block;margin-left:15px;margin-right:15px;">缩放 Y：</label>
             <input id="signature_scale_y" type="range" disabled min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 oninput="scaleSignatureY()" />
-            <div style="display:block">
+            <div style="display:block;">
                 <input id="signature_scale_ratio_locked" type="checkbox" checked="checked"
-                    style="display:inline;margin-left:15px;margin-bottom:15px" oninput="setScaleRatioLock()" />
+                    style="display:inline;margin-left:15px;margin-bottom:15px;" oninput="setScaleRatioLock()" />
                 <label for="signature_scale_ratio_locked"
-                    style="display:inline;margin-right:15px;margin-bottom:15px">锁定缩放比例</label>
+                    style="display:inline;margin-right:15px;margin-bottom:15px;">锁定缩放比例</label>
             </div>
-            <label for="signature_rotate" style="display:block;margin-left:15px;margin-right:15px">旋转：</label>
+            <label for="signature_rotate" style="display:block;margin-left:15px;margin-right:15px;">旋转：</label>
             <input id="signature_rotate" type="range" min="-1" max="1" value="0" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 oninput="rotateSignature()" />
-            <label for="signature_opacity" style="display:block;margin-left:15px;margin-right:15px">透明：</label>
+            <label for="signature_opacity" style="display:block;margin-left:15px;margin-right:15px;">透明：</label>
             <input id="signature_opacity" type="range" min="0.5" max="1" value="1" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 oninput="setSignatureOpacity()" />
-            <label for="signature_blur" style="display:block;margin-left:15px;margin-right:15px">模糊：</label>
+            <label for="signature_blur" style="display:block;margin-left:15px;margin-right:15px;">模糊：</label>
             <input id="signature_blur" type="range" min="0" max="1" value="0" step="0.01"
-                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+                style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 oninput="setSignatureBlur()" />
-            <button id="download" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
+            <button id="download" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px;"
                 onclick="download()">生成图像</button>
         </div>
-        <div id="content" style="position:relative">
-            <div id="background" style="position:absolute;z-index:1;width:800px">
-                <img id="img_background" src="background.jpg" style="width:100%" />
+        <div id="content" style="position:relative;">
+            <div id="background" style="position:absolute;z-index:1;width:800px;">
+                <img id="img_background" src="background.jpg" style="width:100%;" />
             </div>
-            <div id="signature" style="position:absolute;z-index:2;mix-blend-mode:multiply">
-                <img id="img_signature" style="width:100%;height:100%" />
+            <div id="signature" style="position:absolute;z-index:2;mix-blend-mode:multiply;">
+                <img id="img_signature" style="width:100%;height:100%;" />
             </div>
         </div>
     </div>
