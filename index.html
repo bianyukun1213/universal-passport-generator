@@ -121,7 +121,7 @@
                 onclick="download()">生成图像</button>
         </div>
         <div id="content" style="position:relative">
-            <div id="background" style="position:absolute;z-index:1;width:800px">
+            <div id="background" style="position:absolute;z-index:1;width:800px;border:3px solid">
                 <img id="background-image" src="background.jpg" alt="Background" style="width:100%">
             </div>
             <div id="signature" style="position:absolute;z-index:2;mix-blend-mode:multiply;border:3px solid">
@@ -379,7 +379,9 @@
             setSignatureBlur();
         };
         var download = function () {
+            var background= document.getElementById('background');
             var signature = document.getElementById('signature');
+            background.style.border = '';
             signature.style.border = '';
             var node = document.getElementById('content');
             domtoimage.toJpeg(node, {
@@ -390,6 +392,7 @@
                 a.href = dataUrl;
                 a.download = 'picture.jpg';
                 a.click();
+                background.style.border = '3px solid';
                 signature.style.border = '3px solid';
             });
         };
