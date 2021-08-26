@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 
 <head>
+    <meta charset="UTF-8">
     <meta http-equiv="cache-control" content="max-age=0">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
@@ -10,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="author" content="Hollis">
     <meta name="robots" content="none">
-    <meta charset="UTF-8">
     <link rel="shortcut icon" href="favicon.ico">
     <title>U.P.G.</title>
 </head>
@@ -22,7 +22,7 @@
         <div id="functions"
             style="position:fixed;top:0;bottom:0;width:350px;z-index:3;overflow:auto;background-color:white;border:3px solid;opacity:0.75">
             <h1 style="margin-left:15px;margin-right:15px;margin-bottom:15px">U.P.G.</span></h1>
-            <p style="margin-left:15px;margin-right:15px;margin-bottom:15px;color:red">禁止滥用，使用即同意不外传并承担一切责任。</p>
+            <p style="margin-left:15px;margin-right:15px;margin-bottom:15px;color:red">禁止滥用，使用即同意不外传并承担一切责任与后果。</p>
             <hr style="margin-left:15px;margin-right:15px;margin-bottom:15px">
             <label for="background-input"
                 style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px">背景：</label>
@@ -35,9 +35,19 @@
             <select id="signature-selection" style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px"
                 oninput="selectSignature(event)">
             </select>
+            <label for="signature-input"
+                style="display:none;margin-left:15px;margin-right:15px;margin-bottom:15px">签名：</label>
             <input id="signature-input" type="file" accept="image/*"
                 style="display:none;margin-left:15px;margin-right:15px;margin-bottom:15px"
                 oninput="loadSignatureImg(event)">
+            <div style="display:block">
+                <label for="signature-dyeing" style="display:none;margin-bottom:15px">染色：</label>
+                <input id="signature-dyeing" type="checkbox" style="margin-left:15px;margin-bottom:15px"
+                    oninput="setSignatureDyeing()">
+                <label for="signature-color" style="margin-bottom:15px">染色：</label>
+                <input id="signature-color" type="color" disabled style="margin-right:15px;margin-bottom:15px"
+                    oninput="setSignatureDyeing()">
+            </div>
             <label for="signature-width"
                 style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px">宽度：</label>
             <div style="display:block">
@@ -58,7 +68,7 @@
             <div style="display:block">
                 <input id="signature-aspect-ratio-lock" type="checkbox" checked="checked"
                     style="margin-left:15px;margin-bottom:15px" oninput="setSignatureAspectRatioLock()">
-                <label for="signature-aspect-ratio-lock" style="margin-right:15px;margin-bottom:15px">锁定宽高比</label>
+                <label for="signature-aspect-ratio-lock" style="margin-right:15px;margin-bottom:15px">锁定比例</label>
             </div>
             <label for="signature-position-x"
                 style="display:block;margin-left:15px;margin-right:15px;margin-bottom:15px">位置 X：</label>
@@ -97,7 +107,7 @@
             <div style="display:block">
                 <input id="signature-rotation-3d-z" type="range" min="-1" max="1" step="0.01"
                     style="margin-left:15px;margin-right:15px;margin-bottom:15px" oninput="setSignatureRotation3DZ()">
-                <button id="reset-signature-rotation-3d-y" style="margin-left:15px;margin-right:15px;margin-bottom:15px"
+                <button id="reset-signature-rotation-3d-z" style="margin-left:15px;margin-right:15px;margin-bottom:15px"
                     onclick="resetSignatureRotation3DZ()">重置</button>
             </div>
             <label for="signature-opacity"
@@ -122,7 +132,7 @@
         </div>
         <div id="content" style="position:relative">
             <div id="background" style="position:absolute;z-index:1;width:800px;border:3px solid">
-                <img id="background-image" src="background.jpg" alt="Background" style="width:100%">
+                <img id="background-image" src="background.webp" alt="Background" style="width:100%">
             </div>
             <div id="signature" style="position:absolute;z-index:2;mix-blend-mode:multiply;border:3px solid">
                 <img id="signature-image" alt="Signature" style="width:100%;height:100%">
@@ -132,94 +142,93 @@
     <script type="text/javascript" src="https://cdn.staticfile.org/dom-to-image/2.6.0/dom-to-image.min.js">
     </script>
     <script type="text/javascript">
-        var signatureData = [{
+        let signatureData = [{
                 type: 'built-in',
-                image: 'signature-only-1.png',
+                image: 'signature-only-1.webp',
                 text: '单签名 1',
                 width: 320,
                 height: 200
             },
             {
                 type: 'built-in',
-                image: 'signature-only-2.png',
+                image: 'signature-only-2.webp',
                 text: '单签名 2',
                 width: 320,
                 height: 200
             },
             {
                 type: 'built-in',
-                image: 'signature-only-3.png',
+                image: 'signature-only-3.webp',
                 text: '单签名 3',
                 width: 320,
                 height: 200
             },
             {
                 type: 'built-in',
-                image: 'signature-1.png',
+                image: 'signature-1.webp',
                 text: '“同意”及签名 1',
                 width: 320,
                 height: 200
             },
             {
                 type: 'built-in',
-                image: 'signature-2.png',
+                image: 'signature-2.webp',
                 text: '“同意”及签名 2',
                 width: 320,
                 height: 200
             },
             {
                 type: 'built-in',
-                image: 'signature-3.png',
+                image: 'signature-3.webp',
                 text: '“同意”及签名 3',
                 width: 320,
                 height: 200
             },
             {
                 type: 'built-in',
-                image: 'signature-4.png',
+                image: 'signature-4.webp',
                 text: '“同意”及签名 4',
                 width: 200,
                 height: 200
             },
             {
                 type: 'built-in',
-                image: 'signature-5.png',
+                image: 'signature-5.webp',
                 text: '“同意”及签名 5',
                 width: 320,
                 height: 200
             },
             {
                 type: 'built-in',
-                image: 'signature-6.png',
+                image: 'signature-6.webp',
                 text: '“情况属实。”及签名',
                 width: 320,
                 height: 200
             },
             {
                 type: 'built-in',
-                image: 'signature-7.png',
+                image: 'signature-7.webp',
                 text: '“同意，情况属实。”及签名',
                 width: 560,
                 height: 160
             },
             {
                 type: 'customized',
-                image: 'signature-customized.png',
+                image: 'signature-customized.webp',
                 text: '自定义（320 像素 * 200 像素，白底黑字）',
                 width: 320,
                 height: 200
             }
         ];
-        var panelHidden = false;
-        var select = document.getElementById('signature-selection');
-        for (var item of signatureData) {
+        let panelHidden = false;
+        let select = document.getElementById('signature-selection');
+        for (let item of signatureData) {
             select.options.add(new Option(item.text));
         }
         select.selectedIndex = 0;
-        var signatureWidth = signatureData[0].width;
-        var signatureHeight = signatureData[0].height;
-        var signatureAspectRatioLocked = true;
-        var signatureTransform = {
+        let signatureWidth = signatureData[0].width;
+        let signatureHeight = signatureData[0].height;
+        let signatureTransform = {
             rotation3DX: 0,
             rotation3DY: 0,
             rotation3DZ: 0
@@ -234,13 +243,14 @@
             setSignatureHeight();
         };
         document.getElementById('signature-image').onload = function () {
-            var index = document.getElementById('signature-selection').options.selectedIndex;
+            let index = document.getElementById('signature-selection').options.selectedIndex;
             signatureWidth = signatureData[index].width;
             signatureHeight = signatureData[index].height;
             setSignatureWidth();
             setSignatureHeight();
+            setSignatureDyeing();
         };
-        var load = function () {
+        let load = function () {
             resetSignatureWidth();
             resetSignatureHeight();
             resetSignaturePositionX();
@@ -251,7 +261,7 @@
             resetSignatureOpacity();
             resetSignatureBlur();
         };
-        var hidePanel = function () {
+        let hidePanel = function () {
             panelHidden = !panelHidden;
             document.getElementById('functions').hidden = panelHidden;
             if (panelHidden)
@@ -259,150 +269,174 @@
             else
                 document.getElementById('panel-control').innerText = '隐藏面板';
         };
-        var loadBackgroundImg = function (event) {
-            var output = document.getElementById('background-image');
+        let loadBackgroundImg = function (event) {
+            if (event.target.files.length === 0)
+                return;
+            let output = document.getElementById('background-image');
             URL.revokeObjectURL(output.src);
             output.src = URL.createObjectURL(event.target.files[0]);
         };
-        var loadSignatureImg = function (event) {
-            var output = document.getElementById('signature-image');
+        let loadSignatureImg = function (event) {
+            if (event.target.files.length === 0)
+                return;
+            let output = document.getElementById('signature-image');
             URL.revokeObjectURL(output.src);
             signatureData[Object.keys(signatureData).length - 1].image = URL.createObjectURL(event.target.files[0]);
             output.src = URL.createObjectURL(event.target.files[0]);
         };
-        var selectSignature = function (event) {
-            var index = event.target.options.selectedIndex;
+        let selectSignature = function (event) {
+            let index = event.target.options.selectedIndex;
             document.getElementById('signature-image').src = signatureData[index].image;
             if (signatureData[index].type == 'customized')
                 document.getElementById('signature-input').style.display = 'block';
             else
                 document.getElementById('signature-input').style.display = 'none';
         };
-        var setSignatureWidth = function () {
-            var value = document.getElementById('signature-width').value;
-            var signature = document.getElementById('signature');
+        let setSignatureWidth = function () {
+            let locked = document.getElementById('signature-aspect-ratio-lock').checked;
+            let value = document.getElementById('signature-width').value;
+            let signature = document.getElementById('signature');
             signature.style.width = (signatureWidth * value) + 'px';
-            if (signatureAspectRatioLocked) {
+            if (locked) {
                 document.getElementById('signature-height').value = value;
                 signature.style.height = (signatureHeight * value) + 'px';
             }
             setSignaturePositionX();
             setSignaturePositionY();
         };
-        var resetSignatureWidth = function () {
+        let resetSignatureWidth = function () {
             document.getElementById('signature-width').value = 1;
             setSignatureWidth();
         };
-        var setSignatureHeight = function () {
-            var value = document.getElementById('signature-height').value;
-            var signature = document.getElementById('signature');
+        let setSignatureHeight = function () {
+            let value = document.getElementById('signature-height').value;
+            let signature = document.getElementById('signature');
             signature.style.height = (signatureHeight * value) + 'px';
             setSignaturePositionX();
             setSignaturePositionY();
         };
-        var resetSignatureHeight = function () {
+        let resetSignatureHeight = function () {
             document.getElementById('signature-height').value = 1;
             setSignatureHeight();
         };
-        var setSignatureAspectRatioLock = function () {
+        let setSignatureAspectRatioLock = function () {
             if (document.getElementById('signature-aspect-ratio-lock').checked) {
-                signatureAspectRatioLocked = true;
                 document.getElementById('signature-height').disabled = true;
                 document.getElementById('reset-signature-height').disabled = true;
             } else {
-                signatureAspectRatioLocked = false;
                 document.getElementById('signature-height').disabled = false;
                 document.getElementById('reset-signature-height').disabled = false;
             }
             setSignatureWidth();
             setSignatureHeight();
         };
-        var setSignaturePositionX = function () {
-            var value = document.getElementById('signature-position-x').value;
-            var signature = document.getElementById('signature');
-            var backgroundOffsetLeft = document.getElementById('background').offsetLeft;
-            var backgroundWidth = document.getElementById('background').offsetWidth;
-            var xLimitation = backgroundWidth - signature.offsetWidth;
+        let setSignaturePositionX = function () {
+            let value = document.getElementById('signature-position-x').value;
+            let signature = document.getElementById('signature');
+            let backgroundOffsetLeft = document.getElementById('background').offsetLeft;
+            let backgroundWidth = document.getElementById('background').offsetWidth;
+            let xLimitation = backgroundWidth - signature.offsetWidth;
             signature.style.left = (backgroundOffsetLeft + xLimitation * value) + 'px';
         };
-        var resetSignaturePositionX = function () {
+        let resetSignaturePositionX = function () {
             document.getElementById('signature-position-x').value = 0.8;
             setSignaturePositionX();
         };
-        var setSignaturePositionY = function () {
-            var value = document.getElementById('signature-position-y').value;
-            var signature = document.getElementById('signature');
-            var backgroundOffsetTop = document.getElementById('background').offsetTop;
-            var backgroundHeight = document.getElementById('background').offsetHeight;
-            var yLimitation = backgroundHeight - signature.offsetHeight;
+        let setSignaturePositionY = function () {
+            let value = document.getElementById('signature-position-y').value;
+            let signature = document.getElementById('signature');
+            let backgroundOffsetTop = document.getElementById('background').offsetTop;
+            let backgroundHeight = document.getElementById('background').offsetHeight;
+            let yLimitation = backgroundHeight - signature.offsetHeight;
             signature.style.top = (backgroundOffsetTop + yLimitation * value) + 'px';
         };
-        var resetSignaturePositionY = function () {
+        let resetSignaturePositionY = function () {
             document.getElementById('signature-position-y').value = 0.8;
             setSignaturePositionY();
         };
-        var setSignatureRotation3DX = function () {
-            var value = document.getElementById('signature-rotation-3d-x').value;
+        let setSignatureRotation3DX = function () {
+            let value = document.getElementById('signature-rotation-3d-x').value;
             signatureTransform.rotation3DX = 15 * value;
             applySignatureRotation();
         };
-        var resetSignatureRotation3DX = function () {
+        let resetSignatureRotation3DX = function () {
             document.getElementById('signature-rotation-3d-x').value = 0;
             setSignatureRotation3DX();
         };
-        var setSignatureRotation3DY = function () {
-            var value = document.getElementById('signature-rotation-3d-y').value;
+        let setSignatureRotation3DY = function () {
+            let value = document.getElementById('signature-rotation-3d-y').value;
             signatureTransform.rotation3DY = 15 * value;
             applySignatureRotation();
         };
-        var resetSignatureRotation3DY = function () {
+        let resetSignatureRotation3DY = function () {
             document.getElementById('signature-rotation-3d-y').value = 0;
             setSignatureRotation3DY();
         };
-        var setSignatureRotation3DZ = function () {
-            var value = document.getElementById('signature-rotation-3d-z').value;
+        let setSignatureRotation3DZ = function () {
+            let value = document.getElementById('signature-rotation-3d-z').value;
             signatureTransform.rotation3DZ = 15 * value;
             applySignatureRotation();
         };
-        var resetSignatureRotation3DZ = function () {
+        let resetSignatureRotation3DZ = function () {
             document.getElementById('signature-rotation-3d-z').value = 0;
             setSignatureRotation3DZ();
         };
-        var applySignatureRotation = function () {
-            var signature = document.getElementById('signature');
+        let applySignatureRotation = function () {
+            let signature = document.getElementById('signature');
             signature.style.transform = 'perspective(100px) rotateX(' + signatureTransform.rotation3DX +
                 'deg) rotateY(' + signatureTransform
                 .rotation3DY + 'deg) rotateZ(' + signatureTransform.rotation3DZ + 'deg)';
         };
-        var setSignatureOpacity = function () {
-            var value = document.getElementById('signature-opacity').value;
-            var signature = document.getElementById('signature');
+        let setSignatureOpacity = function () {
+            let value = document.getElementById('signature-opacity').value;
+            let signature = document.getElementById('signature');
             signature.style.opacity = value;
         };
-        var resetSignatureOpacity = function () {
+        let resetSignatureOpacity = function () {
             document.getElementById('signature-opacity').value = 1;
             setSignatureOpacity();
         };
-        var setSignatureBlur = function () {
-            var value = document.getElementById('signature-blur').value;
-            var signature = document.getElementById('signature');
+        let setSignatureBlur = function () {
+            let value = document.getElementById('signature-blur').value;
+            let signature = document.getElementById('signature');
             signature.style.filter = 'blur(' + 1.5 * value + 'px)';
         };
-        var resetSignatureBlur = function () {
+        let resetSignatureBlur = function () {
             document.getElementById('signature-blur').value = 0;
             setSignatureBlur();
         };
-        var download = function () {
-            var background = document.getElementById('background');
-            var signature = document.getElementById('signature');
+        let setSignatureDyeing = function () {
+            let signature = document.getElementById('signature');
+            let image = document.getElementById('signature-image');
+            if (document.getElementById('signature-dyeing').checked) {
+                let value = document.getElementById('signature-color').value;
+                document.getElementById('signature-color').disabled = false;
+                signature.style.backgroundImage = 'url(' + image.src + '),linear-gradient(' + value + ',' + value +
+                    ')';
+                signature.style.backgroundSize = '100% 100%';
+                signature.style.backgroundRepeat = 'no-repeat';
+                signature.style.backgroundBlendMode = 'lighten';
+                image.hidden = true;
+            } else {
+                document.getElementById('signature-color').disabled = true;
+                signature.style.backgroundImage = '';
+                signature.style.backgroundSize = '';
+                signature.style.backgroundRepeat = '';
+                signature.style.backgroundBlendMode = '';
+                image.hidden = false;
+            }
+        };
+        let download = function () {
+            let background = document.getElementById('background');
+            let signature = document.getElementById('signature');
             background.style.border = '';
             signature.style.border = '';
-            var node = document.getElementById('content');
+            let node = document.getElementById('content');
             domtoimage.toJpeg(node, {
                 width: document.getElementById('background-image').offsetWidth,
                 height: document.getElementById('background-image').offsetHeight
             }).then(function (dataUrl) {
-                var a = document.createElement('a');
+                let a = document.createElement('a');
                 a.href = dataUrl;
                 a.download = 'picture.jpg';
                 a.click();
